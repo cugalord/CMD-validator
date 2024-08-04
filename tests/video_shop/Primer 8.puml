@@ -1,0 +1,86 @@
+@startuml  
+ hide cirlcle 
+ title Primer 8 
+
+legend top left 
+ Identifier attributes mismatch in solution model 
+Unmatched identifier in entity FILM: Primarni kljuc 
+ 
+ end legend
+entity "OSEBJE" as o30 #ffffff/b0ffff;line:00aaaa {
+	* ID osebja : Integer   MANDATORY PRIMARY KEY
+	* Ime : VARCHAR 20  MANDATORY 
+	* Pozicija : VARCHAR 20  MANDATORY 
+	* Placa : Money   MANDATORY  
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+entity "PODRUŽNICA" as o31 #ffffff/b0ffff;line:00aaaa {
+	* ID podružnice : Integer   MANDATORY PRIMARY KEY
+	* Ulica : VARCHAR 20  MANDATORY 
+	* Telefonska številka : Number 11    
+	 --
+	* Identifier_1 PRIMARY KEY
+}
+entity "MESTO" as o32 #ffffff/b0ffff;line:00aaaa {
+	* Poštna številka : Number 4  MANDATORY PRIMARY KEY
+	* Kraj : VARCHAR 20  MANDATORY  
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+entity "CLAN" as o33 #ffffff/b0ffff;line:00aaaa {
+	* Clanska številka : VARCHAR 10  MANDATORY PRIMARY KEY
+	* Ime : VARCHAR 20  MANDATORY 
+	* Priimek : VARCHAR 20  MANDATORY 
+	* Datum registracije : Date   MANDATORY  
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+entity "ZVRST" as o34 #ffffff/b0ffff;line:00aaaa {
+	* Šifra zvrsti : Integer   MANDATORY PRIMARY KEY
+	* Naziv zvrsti : VARCHAR 20  MANDATORY  
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+entity "FILM" as o35 #FF0000;line:000000 {
+	* Kataloška številka : Integer   MANDATORY 
+	* Naslov : VARCHAR 40  MANDATORY PRIMARY KEY
+	* Cena na dan : Money   MANDATORY 
+	* Ime glavnega igralca : VARCHAR 40   
+	* Ime režiserja : VARCHAR 40    
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+entity "FILM ZA IZPOSOJO" as o36 #ffffff/b0ffff;line:00aaaa {
+	* Številka filma : Integer   MANDATORY PRIMARY KEY
+	* Status : Boolean   MANDATORY  
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+entity "IZPOSOJA" as o37 #ffffff/b0ffff;line:00aaaa {
+	* Števiilka Izposoje : Integer   MANDATORY PRIMARY KEY
+	* Datum izposoje : Date   MANDATORY 
+	* Datum vrnitve : Date    
+	* Skupna cena : Money     
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+o31 ||-[#8080ff]-|{ o30: zaposluje 
+
+o31 |o-[#8080ff]-|| o30: menedžira 
+
+o31 }o-[#8080ff]-|| o32: je v mestu 
+
+o31 ||-[#8080ff]-o{ o33: se registrira 
+
+o35 }o-[#8080ff]-|{ o34: ima žanr 
+
+o35 ||.[#8080ff].o{ o36: vezan na 
+
+o36 }|-[#8080ff]-o{ o37: velja za 
+
+o36 }|-[#8080ff]-|| o31: izposoja 
+
+o33 ||.[#8080ff].o{ o37: zahteva 
+
+@enduml

@@ -1,0 +1,78 @@
+@startuml  
+ hide cirlcle 
+ title Primer 1 
+
+legend top left 
+ Unmatched entity in solution model: ZVRST 
+Unmatched relationship in solution model: ima žanr 
+ 
+ end legend
+entity "OSEBJE" as o27 #ffffff/b0ffff;line:00aaaa {
+	* ID osebja : Integer   MANDATORY PRIMARY KEY
+	* Ime : VARCHAR 20  MANDATORY 
+	* Pozicija : VARCHAR 20  MANDATORY 
+	* Placa : Money   MANDATORY  
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+entity "PODRUŽNICA" as o28 #ffffff/b0ffff;line:00aaaa {
+	* ID podružnice : Integer   MANDATORY PRIMARY KEY
+	* Ulica : VARCHAR 20  MANDATORY 
+	* Telefonska številka : Number 11    
+	 --
+	* Identifier_1 PRIMARY KEY
+}
+entity "MESTO" as o29 #ffffff/b0ffff;line:00aaaa {
+	* Poštna številka : Number 4  MANDATORY PRIMARY KEY
+	* Kraj : VARCHAR 20  MANDATORY  
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+entity "CLAN" as o30 #ffffff/b0ffff;line:00aaaa {
+	* Clanska številka : VARCHAR 10  MANDATORY PRIMARY KEY
+	* Ime : VARCHAR 20  MANDATORY 
+	* Priimek : VARCHAR 20  MANDATORY 
+	* Datum registracije : Date   MANDATORY  
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+entity "FILM" as o31 #ffffff/b0ffff;line:00aaaa {
+	* Kataloška številka : Integer   MANDATORY PRIMARY KEY
+	* Naslov : VARCHAR 40  MANDATORY 
+	* Cena na dan : Money   MANDATORY 
+	* Ime glavnega igralca : VARCHAR 40   
+	* Ime režiserja : VARCHAR 40    
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+entity "FILM ZA IZPOSOJO" as o32 #ffffff/b0ffff;line:00aaaa {
+	* Številka filma : Integer   MANDATORY PRIMARY KEY
+	* Status : Boolean   MANDATORY  
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+entity "IZPOSOJA" as o33 #ffffff/b0ffff;line:00aaaa {
+	* Števiilka Izposoje : Integer   MANDATORY PRIMARY KEY
+	* Datum izposoje : Date   MANDATORY 
+	* Datum vrnitve : Date    
+	* Skupna cena : Money     
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+o28 ||-[#8080ff]-|{ o27: zaposluje 
+
+o28 |o-[#8080ff]-|| o27: menedžira 
+
+o28 }o-[#8080ff]-|| o29: je v mestu 
+
+o28 ||-[#8080ff]-o{ o30: se registrira 
+
+o31 ||.[#8080ff].o{ o32: vezan na 
+
+o32 }|-[#8080ff]-o{ o33: velja za 
+
+o32 }|-[#8080ff]-|| o28: izposoja 
+
+o30 ||.[#8080ff].o{ o33: zahteva 
+
+@enduml

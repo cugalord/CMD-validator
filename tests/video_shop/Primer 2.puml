@@ -1,0 +1,93 @@
+@startuml  
+ hide cirlcle 
+ title Primer 2 
+
+legend top left 
+ Entity Imdb_ocena not found in solution model 
+Relationship pfk_imdb not found in solution model 
+ 
+ end legend
+entity "OSEBJE" as o33 #ffffff/b0ffff;line:00aaaa {
+	* ID osebja : Integer   MANDATORY PRIMARY KEY
+	* Ime : VARCHAR 20  MANDATORY 
+	* Pozicija : VARCHAR 20  MANDATORY 
+	* Placa : Money   MANDATORY  
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+entity "PODRUŽNICA" as o34 #ffffff/b0ffff;line:00aaaa {
+	* ID podružnice : Integer   MANDATORY PRIMARY KEY
+	* Ulica : VARCHAR 20  MANDATORY 
+	* Telefonska številka : Number 11    
+	 --
+	* Identifier_1 PRIMARY KEY
+}
+entity "MESTO" as o35 #ffffff/b0ffff;line:00aaaa {
+	* Poštna številka : Number 4  MANDATORY PRIMARY KEY
+	* Kraj : VARCHAR 20  MANDATORY  
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+entity "CLAN" as o36 #ffffff/b0ffff;line:00aaaa {
+	* Clanska številka : VARCHAR 10  MANDATORY PRIMARY KEY
+	* Ime : VARCHAR 20  MANDATORY 
+	* Priimek : VARCHAR 20  MANDATORY 
+	* Datum registracije : Date   MANDATORY  
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+entity "ZVRST" as o37 #ffffff/b0ffff;line:00aaaa {
+	* Šifra zvrsti : Integer   MANDATORY PRIMARY KEY
+	* Naziv zvrsti : VARCHAR 20  MANDATORY  
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+entity "FILM" as o38 #ffffff/b0ffff;line:00aaaa {
+	* Kataloška številka : Integer   MANDATORY PRIMARY KEY
+	* Naslov : VARCHAR 40  MANDATORY 
+	* Cena na dan : Money   MANDATORY 
+	* Ime glavnega igralca : VARCHAR 40   
+	* Ime režiserja : VARCHAR 40    
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+entity "FILM ZA IZPOSOJO" as o39 #ffffff/b0ffff;line:00aaaa {
+	* Številka filma : Integer   MANDATORY PRIMARY KEY
+	* Status : Boolean   MANDATORY  
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+entity "IZPOSOJA" as o40 #ffffff/b0ffff;line:00aaaa {
+	* Števiilka Izposoje : Integer   MANDATORY PRIMARY KEY
+	* Datum izposoje : Date   MANDATORY 
+	* Datum vrnitve : Date    
+	* Skupna cena : Money     
+	 --
+	* Primarni kljuc PRIMARY KEY
+}
+entity "Imdb_ocena" as o41 #FF0000;line:000000 {
+	* ocena : Float   MANDATORY PRIMARY KEY 
+	 --
+	* Identifier_1 PRIMARY KEY
+}
+o34 ||-[#8080ff]-|{ o33: zaposluje 
+
+o34 |o-[#8080ff]-|| o33: menedžira 
+
+o34 }o-[#8080ff]-|| o35: je v mestu 
+
+o34 ||-[#8080ff]-o{ o36: se registrira 
+
+o38 }o-[#8080ff]-|{ o37: ima žanr 
+
+o38 ||.[#8080ff].o{ o39: vezan na 
+
+o39 }|-[#8080ff]-o{ o40: velja za 
+
+o39 }|-[#8080ff]-|| o34: izposoja 
+
+o36 ||.[#8080ff].o{ o40: zahteva 
+
+o38 ||.[#FF0000].|| o41: pfk_imdb 
+
+@enduml
